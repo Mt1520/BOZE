@@ -27,7 +27,7 @@ G_OEI = 1.5/100;
 G_balked_landing = 3/100;
 
 climb_req = (V/eta_p) .* (G + 2*sqrt(Cd_0 / (pi*AR*e)) ) * ones(length(T_W),1);
-climb_req_OEI = (V/eta_p) .* (G_OEI + 2*sqrt(Cd_0 / (pi*AR*e)) ) * ones(length(T_W),1);
+climb_req_OEI = 2*(V/eta_p) .* (G_OEI + 2*sqrt(Cd_0 / (pi*AR*e)) ) * ones(length(T_W),1);
 climb_req_balked_landing = (V/eta_p) .* (G_balked_landing + 2*sqrt(Cd_0 / (pi*AR*e)) ) * ones(length(T_W),1);
 
 stall_req = V_stall^2*(0.5 * rho * Cl_max) * ones(length(W_S),1);
