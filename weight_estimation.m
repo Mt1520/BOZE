@@ -34,7 +34,7 @@ T_T0 = delta_0*( 1 - 0.49*sqrt(max_mach));
 
 % init params
 dragonfly.wing.MAC = []; % MAC = mean aero chord
-dragonfly.wing.Sw = 44.85; % m^2
+dragonfly.wing.Sw = []; % m^2
 dragonfly.HTP.MAC = [];
 dragonfly.HTP.Sw = [];
 dragonfly.VTP.MAC = [];
