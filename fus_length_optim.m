@@ -2,7 +2,7 @@ clear
 clc
 close all
 
-alpha_to = 10; %angle of attack limit for takeoff, degrees 
+alpha_to =  10; %angle of attack limit for takeoff, degrees 
 S_ref = 11.211; 
 h_gc = 0.18; %propeller ground clearance height
 c_ht = 0.8;
@@ -13,10 +13,10 @@ b_w = 8.06;
 h = 1.2;
 
 HTP_AR = 4;
-HTP_lambda = 0.45; %taper ratio
+HTP_lambda = 0.4; %taper ratio
 
 VTP_AR = 1.6;
-VTP_lambda = 0.45;
+VTP_lambda = 0.4;
 
 l = 1:0.1:10 ; %2:0.1:10;
 
@@ -61,6 +61,7 @@ h_1 = convlength(1500,"ft","m");
 q_cruise = convpres(1/2 * rho * V^2, "pa", "psf" );
 
 fus_w = 0.052.*(tot_fus_S*10.76391041671).^1.086*(ULF*DG).^0.177 * q_cruise^0.241;
+fus_w = fus_w * 0.85;
 
 DFTE = 0;
 
@@ -75,16 +76,19 @@ XNLG = XMLG;
 
 S_XMLG_bar = 0.1.*(XMLG.^2).*pi;
 S_XMLG_wheel = (((12*2.54)/2)^2 * pi * 2 + 12*2.54 * pi * 6*2.54)/(100^2);
-S_XMLG = S_XMLG_bar + S_XMLG_bar;
+S_XMLG = S_XMLG_bar + S_XMLG_wheel;
 S_XNLG = S_XMLG;
 
 S_wet = S_wet + (2*S_XMLG + S_XNLG);
 
-MG_W = (0.0117-0.00112 * DFTE) * DG^0.95 .* convlength(XMLG,"m","in").^0.43;
-NG_W = (0.048-0.0080 * DFTE) * DG^0.67 .* convlength(XNLG,"m","in").^0.43;
+MG_W = (0.0117-0.00112 * DFTE) * DG^0.95 .* (convlength(XMLG,"m","in")+4).^0.43;
+MG_W = MG_W*0.88;
+NG_W = (0.048-0.0080 * DFTE) * DG^0.67 .* (convlength(XMLG,"m","in")+4).^0.43;
+NG_W = NG_W*0.88;
 
 SHT = S_H.*10.76391041671;
 HT_W = 0.016*SHT.^0.873 .* (ULF * DG)^0.414 * q_cruise^0.122;
+HT_W = HT_W * 0.75;
 
 HHT = 0;
 SVT = S_V * 10.76391041671;
@@ -93,7 +97,7 @@ SWPVT = 0;
 CSVT = cos(SWPVT);
 TCVT = 0.12; % thickness to chord vtp, yet to do, this is provisional value
 VT_W = 0.073*(1 + 0.2 * HHT)*(ULF * DG)^0.376 *q_cruise^0.122 .* SVT.^0.873 .* (ARVT/CSVT^2)^0.357 / (100*TCVT/CSVT)^0.49;
-
+VT_W = VT_W * 0.75;
 
 TR = 0.4;
 AR = 5.8;
